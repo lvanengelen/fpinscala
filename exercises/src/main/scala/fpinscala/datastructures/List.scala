@@ -50,7 +50,20 @@ object List { // `List` companion object. Contains functions for creating and wo
     foldRight(ns, 1.0)(_ * _) // `_ * _` is more concise notation for `(x,y) => x * y`; see sidebar
 
 
-  def tail[A](l: List[A]): List[A] = ???
+  def tail[A](l: List[A]): List[A] = l match {
+    case Cons(x, xs) => xs
+    case Nil => throw new RuntimeException("empty list")
+  }
+
+  def tail2[A](l: List[A]): Option[List[A]] = l match {
+    case Cons(x, xs) => Some(xs)
+    case Nil => None
+  }
+
+  def tail3[A](l: List[A]): List[A] = l match {
+    case Cons(x, xs) => xs
+    case Nil => l
+  }
 
   def setHead[A](l: List[A], h: A): List[A] = ???
 
