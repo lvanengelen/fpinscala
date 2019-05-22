@@ -26,4 +26,12 @@ class ListSpec extends FlatSpec {
   "Setting the head of a list" should "replaces its first value" in {
     assert(List.setHead(List(1, 2, 3), 0) === List(0, 2, 3))
   }
+
+  "Dropping 2 items of a four item list" should "leave the last two items" in {
+    assert(List.drop(List(1, 2, 3, 4), 2) === List(3, 4))
+  }
+
+  "Dropping more items than there are in a list" should "return the empty list" in {
+    assert(List.drop(List(1, 2), 3) === Nil)
+  }
 }

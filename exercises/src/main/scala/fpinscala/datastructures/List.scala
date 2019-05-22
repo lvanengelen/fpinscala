@@ -70,7 +70,10 @@ object List { // `List` companion object. Contains functions for creating and wo
     case _ => throw new RuntimeException("empty list")
   }
 
-  def drop[A](l: List[A], n: Int): List[A] = ???
+  def drop[A](l: List[A], n: Int): List[A] = l match {
+    case Cons(_, xs) if n > 0 => drop(xs, n - 1)
+    case _ => l
+  }
 
   def dropWhile[A](l: List[A], f: A => Boolean): List[A] = ???
 
