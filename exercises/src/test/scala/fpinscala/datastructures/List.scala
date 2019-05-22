@@ -22,4 +22,8 @@ class ListSpec extends FlatSpec {
   "The tail3 of an empty list" should "return an empty list" in {
     assert(List.tail3(Nil) === Nil)
   }
+
+  "Setting the head of a list" should "replaces its first value" in {
+    assert(List.setHead(List(1, 2, 3), 0) === List(0, 2, 3))
+  }
 }
