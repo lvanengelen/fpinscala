@@ -34,4 +34,12 @@ class ListSpec extends FlatSpec {
   "Dropping more items than there are in a list" should "return the empty list" in {
     assert(List.drop(List(1, 2), 3) === Nil)
   }
+
+  "Dropping while a predicate holds" should "drop the prefix for which the predicate holds" in {
+    assert(List.dropWhile(List(1, 2, 3))(_ <= 2) === List(3))
+  }
+
+  "Dropping when the predicate always holds" should "return the empty list" in {
+    assert(List.dropWhile(List(1, 2, 3))(_ => true) === Nil)
+  }
 }
