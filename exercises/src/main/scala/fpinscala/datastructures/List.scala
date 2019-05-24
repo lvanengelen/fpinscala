@@ -80,10 +80,18 @@ object List { // `List` companion object. Contains functions for creating and wo
     case _ => l
   }
 
-  def init[A](l: List[A]): List[A] = l match {
-    case Cons(_, Nil) => Nil
-    case Cons(x, xs) => Cons(x, init(xs))
-    case Nil => Nil
+  def init[A](l: List[A]): List[A] = {
+    import scala.collection.mutable
+    val buf = new mutable.ListBuffer[A]
+    @annotation.tailrec
+    def fillBuffer(ys: List[A]): Unit = ys match {
+      case Cons(_, Nil) | Nil => Nil
+      case Cons(x, xs) =>
+        buf += x
+        fillBuffer(xs)
+    }
+    fillBuffer(l)
+    List(buf.toList: _*)
   }
 
   def length[A](l: List[A]): Int = ???
