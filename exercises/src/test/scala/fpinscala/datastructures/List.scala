@@ -42,4 +42,12 @@ class ListSpec extends FlatSpec {
   "Dropping when the predicate always holds" should "return the empty list" in {
     assert(List.dropWhile(List(1, 2, 3))(_ => true) === Nil)
   }
+
+  "The init of an empty list" should "be an empty list" in {
+    assert(List.init(Nil) === Nil)
+  }
+
+  "The init of a list" should "include all but the last element" in {
+    assert(List.init(List(1, 2, 3)) === List(1, 2))
+  }
 }
