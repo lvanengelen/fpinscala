@@ -50,4 +50,12 @@ class ListSpec extends FlatSpec {
   "The init of a list" should "include all but the last element" in {
     assert(List.init(List(1, 2, 3)) === List(1, 2))
   }
+
+  "The length of an empty list" should "be 0" in {
+    assert(List.length(Nil) === 0)
+  }
+
+  "The length of an empty list" should "be equal to its number of elements" in {
+    assert(List.length(List(1, 2, 3)) === 3)
+  }
 }
