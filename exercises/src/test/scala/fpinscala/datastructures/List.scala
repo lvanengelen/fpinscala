@@ -82,4 +82,25 @@ class ListSpec extends FlatSpec {
   "The reverse of a list" should "contain the elements in backwards order" in {
     assert(List.reverse(List(1, 2, 3)) === List(3, 2, 1))
   }
+
+  "Folding left by folding right" should "give the same result as just folding left" in {
+    assert {
+      List.foldLeftWithFoldRight(Nil: List[Int], 0)(_ + _) ===
+      List.foldLeft(Nil: List[Int], 0)(_ + _)
+    }
+  }
+
+  "Folding right by folding left" should "give the same result as just folding right" in {
+    assert {
+      List.foldRightWithFoldLeft(Nil: List[Int], 0)(_ + _) ===
+      List.foldRight(Nil: List[Int], 0)(_ + _)
+    }
+  }
+
+  "Folding right by folding left with reverse" should "give the same result as just folding right" in {
+    assert {
+      List.foldRightWithFoldLeftAndReverse(Nil: List[Int], 0)(_ + _) ===
+      List.foldRight(Nil: List[Int], 0)(_ + _)
+    }
+  }
 }
