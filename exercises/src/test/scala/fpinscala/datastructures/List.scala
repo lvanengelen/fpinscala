@@ -58,4 +58,12 @@ class ListSpec extends FlatSpec {
   "The length of an empty list" should "be equal to its number of elements" in {
     assert(List.length(List(1, 2, 3)) === 3)
   }
+
+  "Folding an empty list leftwise" should "equal the initial value" in {
+    assert(List.foldLeft(Nil: List[Int], 0)(_ + _) === 0)
+  }
+
+  "Folding a list leftwise" should "combine the values using the passed function" in {
+    assert(List.foldLeft(List(1, 2, 3), 0)(_ - _) === -6)
+  }
 }
