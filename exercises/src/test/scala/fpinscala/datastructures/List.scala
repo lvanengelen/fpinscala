@@ -103,4 +103,11 @@ class ListSpec extends FlatSpec {
       List.foldRight(Nil: List[Int], 0)(_ + _)
     }
   }
+
+  "Appending using foldAppend" should "be the same as the normal append" in {
+    assert {
+      List.foldAppend(List(1, 2, 3), List(4, 5)) ===
+      List.append(List(1, 2, 3), List(4, 5))
+    }
+  }
 }
