@@ -66,4 +66,16 @@ class ListSpec extends FlatSpec {
   "Folding a list leftwise" should "combine the values using the passed function" in {
     assert(List.foldLeft(List(1, 2, 3), 0)(_ - _) === -6)
   }
+
+  "The sum using foldLeft" should "be the same as the normal sum" in {
+    assert(List.foldSum(List(1, 2, 3)) === List.sum(List(1, 2, 3)))
+  }
+
+  "The product using foldLeft" should "be the same as the normal product" in {
+    assert(List.foldProduct(List(1, 2, 3)) === List.product(List(1, 2, 3)))
+  }
+
+  "The length using foldLeft" should "be the same as the normal length" in {
+    assert(List.foldLength(List(1, 2, 3)) === List.length(List(1, 2, 3)))
+  }
 }
