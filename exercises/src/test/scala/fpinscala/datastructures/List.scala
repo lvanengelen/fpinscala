@@ -78,4 +78,8 @@ class ListSpec extends FlatSpec {
   "The length using foldLeft" should "be the same as the normal length" in {
     assert(List.foldLength(List(1, 2, 3)) === List.length(List(1, 2, 3)))
   }
+
+  "The reverse of a list" should "contain the elements in backwards order" in {
+    assert(List.reverse(List(1, 2, 3)) === List(3, 2, 1))
+  }
 }
