@@ -110,4 +110,12 @@ class ListSpec extends FlatSpec {
       List.append(List(1, 2, 3), List(4, 5))
     }
   }
+
+  "Concatenating an empty list" should "yield an empty list" in {
+    assert(List.concat(Nil) === Nil)
+  }
+
+  "Concatenating a list of lists" should "yield a list with the elements of each list" in {
+    assert(List.concat(List(List(1, 2), Nil, List(3, 4))) === List(1, 2, 3, 4))
+  }
 }
