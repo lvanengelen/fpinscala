@@ -126,4 +126,8 @@ class ListSpec extends FlatSpec {
   "Converting a double list to string" should "convert each element to a string" in {
     assert(List.doubleToString(List(1.0, 2.0, 3.0)) === List("1.0", "2.0", "3.0"))
   }
+
+  "Mapping a function over a list" should "yield a list of results of calling the function on each element" in {
+    assert(List.map(List(1, 2, 3))(_ + 1) === List(2, 3, 4))
+  }
 }
