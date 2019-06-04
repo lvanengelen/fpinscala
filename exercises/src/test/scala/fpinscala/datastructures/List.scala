@@ -130,4 +130,8 @@ class ListSpec extends FlatSpec {
   "Mapping a function over a list" should "yield a list of results of calling the function on each element" in {
     assert(List.map(List(1, 2, 3))(_ + 1) === List(2, 3, 4))
   }
+
+  "Filtering a list" should "yield a list with only the elements for which the predicate holds" in {
+    assert(List.filter(List(1, 2, 3, 4, 5))(x => x % 2 == 0) === List(2, 4))
+  }
 }

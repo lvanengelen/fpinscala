@@ -141,4 +141,20 @@ object List { // `List` companion object. Contains functions for creating and wo
     loop(l)
     List(buf.toList: _*)
   }
+
+  def filter[A](xs: List[A])(p: A => Boolean): List[A] = {
+    import scala.collection.mutable
+    val buf = mutable.ListBuffer[A]()
+    @annotation.tailrec
+    def loop(ys: List[A]): Unit = ys match {
+      case Cons(z, zs) =>
+        if (p(z)) {
+          buf += z
+        }
+        loop(zs)
+      case _ => Nil
+    }
+    loop(xs)
+    List(buf.toList: _*)
+  }
 }
