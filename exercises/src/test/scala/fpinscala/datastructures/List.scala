@@ -122,4 +122,8 @@ class ListSpec extends FlatSpec {
   "Adding one on an integer list" should "increase each element by 1" in {
     assert(List.add1(List(1, 2, 3)) === List(2, 3, 4))
   }
+
+  "Converting a double list to string" should "convert each element to a string" in {
+    assert(List.doubleToString(List(1.0, 2.0, 3.0)) === List("1.0", "2.0", "3.0"))
+  }
 }
