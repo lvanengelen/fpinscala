@@ -159,4 +159,7 @@ object List { // `List` companion object. Contains functions for creating and wo
   }
 
   def flatMap[A, B](xs: List[A])(f: A => List[B]): List[B] = concat(map(xs)(f))
+
+  def filterWithFlatMap[A](xs: List[A])(p: A => Boolean): List[A] =
+    flatMap(xs)(x => if (p(x)) List(x) else Nil)
 }

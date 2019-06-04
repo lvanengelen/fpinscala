@@ -138,4 +138,9 @@ class ListSpec extends FlatSpec {
   "Flatmapping a list" should "map the function over the list and concatenate the result" in {
     assert(List.flatMap(List(1, 2, 3))(x => if (x == 2) Nil else List(x, 2 * x)) === List(1, 2, 3, 6))
   }
+
+  "Filtering a list with flatMap" should "yield a list with only the elements for which the predicate holds" in {
+    assert(List.filterWithFlatMap(List(1, 2, 3, 4, 5))(x => x % 2 == 0) === List(2, 4))
+  }
+
 }
