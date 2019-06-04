@@ -128,6 +128,17 @@ object List { // `List` companion object. Contains functions for creating and wo
   def doubleToString(xs: List[Double]): List[String] =
     foldRight(xs, Nil: List[String])((x, acc) => Cons(x.toString, acc))
 
-  def map[A,B](l: List[A])(f: A => B): List[B] =
-    foldRight(l, Nil: List[B])((x, acc) => Cons(f(x), acc))
+  def map[A,B](l: List[A])(f: A => B): List[B] = {
+    import scala.collection.mutable
+    val buf = mutable.ListBuffer[B]()
+    @annotation.tailrec
+    def loop(xs: List[A]): Unit = xs match {
+      case Cons(y, ys) =>
+        buf += f(y)
+        loop(ys)
+      case _ => Nil
+    }
+    loop(l)
+    List(buf.toList: _*)
+  }
 }
