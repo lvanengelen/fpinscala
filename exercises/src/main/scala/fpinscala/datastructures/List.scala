@@ -123,5 +123,7 @@ object List { // `List` companion object. Contains functions for creating and wo
 
   def concat[A](xs: List[List[A]]): List[A] = foldLeft(xs, Nil: List[A])(append)
 
+  def add1(xs: List[Int]): List[Int] = foldRight(xs, Nil: List[Int])((x, acc) => Cons(x + 1, acc))
+
   def map[A,B](l: List[A])(f: A => B): List[B] = ???
 }

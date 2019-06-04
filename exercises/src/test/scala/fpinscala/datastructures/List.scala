@@ -118,4 +118,8 @@ class ListSpec extends FlatSpec {
   "Concatenating a list of lists" should "yield a list with the elements of each list" in {
     assert(List.concat(List(List(1, 2), Nil, List(3, 4))) === List(1, 2, 3, 4))
   }
+
+  "Adding one on an integer list" should "increase each element by 1" in {
+    assert(List.add1(List(1, 2, 3)) === List(2, 3, 4))
+  }
 }
