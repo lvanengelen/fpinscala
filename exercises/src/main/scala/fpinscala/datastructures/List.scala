@@ -157,4 +157,6 @@ object List { // `List` companion object. Contains functions for creating and wo
     loop(xs)
     List(buf.toList: _*)
   }
+
+  def flatMap[A, B](xs: List[A])(f: A => List[B]): List[B] = concat(map(xs)(f))
 }
