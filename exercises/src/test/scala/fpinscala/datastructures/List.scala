@@ -143,4 +143,11 @@ class ListSpec extends FlatSpec {
     assert(List.filterWithFlatMap(List(1, 2, 3, 4, 5))(x => x % 2 == 0) === List(2, 4))
   }
 
+  "Adding two lists of integers" should "yield a list containing the sum of the elements of both lists" in {
+    assert(List.addListsOfInt(List(1, 2, 3), List(4, 5, 6)) === List(5, 7, 9))
+  }
+
+  "Adding two lists of integers" should "yield a list with a length of the shortest of both lists" in {
+    assert(List.addListsOfInt(List(1, 2, 3, 4, 5), List(4, 5, 6)) == List(5, 7, 9))
+  }
 }
