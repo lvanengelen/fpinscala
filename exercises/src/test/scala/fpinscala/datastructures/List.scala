@@ -150,4 +150,12 @@ class ListSpec extends FlatSpec {
   "Adding two lists of integers" should "yield a list with a length of the shortest of both lists" in {
     assert(List.addListsOfInt(List(1, 2, 3, 4, 5), List(4, 5, 6)) == List(5, 7, 9))
   }
+
+  "Zipping two lists" should "apply the given function on matching elements" in {
+    assert(List.zipWith(List(1, 2, 3), List(4, 5, 6))(_ + _) === List(5, 7, 9))
+  }
+
+  "Zipping two lists" should "hield a list with a length of the shortest of bith lists" in {
+    assert(List.zipWith(List(1, 2, 3, 4, 5), List(4, 5, 6))(_ + _) === List(5, 7, 9))
+  }
 }

@@ -172,4 +172,14 @@ object List { // `List` companion object. Contains functions for creating and wo
 
     reverse(loop(Nil, (l1, l2)))
   }
+
+  def zipWith[A, B, C](l1: List[A], l2: List[B])(f: (A, B) => C): List[C] = {
+    @annotation.tailrec
+    def loop(acc: List[C], p: (List[A], List[B])): List[C] = p match {
+      case (Cons(a, as), Cons(b, bs)) => loop(Cons(f(a, b), acc), (as, bs))
+      case _ => acc
+    }
+
+    reverse(loop(Nil, (l1, l2)))
+  }
 }
