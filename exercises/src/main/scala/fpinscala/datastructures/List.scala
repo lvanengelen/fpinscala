@@ -163,8 +163,13 @@ object List { // `List` companion object. Contains functions for creating and wo
   def filterWithFlatMap[A](xs: List[A])(p: A => Boolean): List[A] =
     flatMap(xs)(x => if (p(x)) List(x) else Nil)
 
-  def addListsOfInt(l1: List[Int], l2: List[Int]): List[Int] = (l1, l2) match {
-    case (Cons(x, xs), Cons(y, ys)) => Cons(x + y, addListsOfInt(xs, ys))
-    case _ => Nil
+  def addListsOfInt(l1: List[Int], l2: List[Int]): List[Int] = {
+    @annotation.tailrec
+    def loop(acc: List[Int], p: (List[Int], List[Int])): List[Int] = p match {
+      case (Cons(x, xs), Cons(y, ys)) => loop(Cons(x + y, acc), (xs, ys))
+      case _ => acc
+    }
+
+    reverse(loop(Nil, (l1, l2)))
   }
 }
