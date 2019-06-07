@@ -155,7 +155,27 @@ class ListSpec extends FlatSpec {
     assert(List.zipWith(List(1, 2, 3), List(4, 5, 6))(_ + _) === List(5, 7, 9))
   }
 
-  "Zipping two lists" should "hield a list with a length of the shortest of bith lists" in {
+  "Zipping two lists" should "yield a list with a length of the shortest of bith lists" in {
     assert(List.zipWith(List(1, 2, 3, 4, 5), List(4, 5, 6))(_ + _) === List(5, 7, 9))
+  }
+
+  "An empty list" should "have the empty list as subsequence" in {
+    assert(List.hasSubsequence(Nil, Nil) === true)
+  }
+
+  "A list" should "have the empty list as subsequence" in {
+    assert(List.hasSubsequence(List(1, 2, 3), Nil) === true)
+  }
+
+  "The empty list" should "have no non-empty list as subsequence" in {
+    assert(List.hasSubsequence(Nil, List(1, 2, 3)) === false)
+  }
+
+  "A list" should "contain a smaller subsequence" in {
+    assert(List.hasSubsequence(List(1, 2, 3, 4, 5, 6), List(3, 4, 5)) === true)
+  }
+
+  "A list" should "contain all elements of its subsequences" in {
+    assert(List.hasSubsequence(List(1, 2, 3, 4, 5, 6), List(5, 6, 7)) === false)
   }
 }

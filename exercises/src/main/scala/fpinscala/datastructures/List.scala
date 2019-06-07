@@ -182,4 +182,19 @@ object List { // `List` companion object. Contains functions for creating and wo
 
     reverse(loop(Nil, (l1, l2)))
   }
+
+  @annotation.tailrec
+  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
+    def startsWith(a: List[A], b: List[A]): Boolean = (a, b) match {
+      case (Cons(x, xs), Cons(y, ys)) => x == y && startsWith(xs, ys)
+      case (_, Nil) => true
+      case (Nil, _) => false
+    }
+
+    sup match {
+      case Cons(x, xs) => startsWith(sup, sub) || hasSubsequence(xs, sub)
+      case _ if sub == Nil => true
+      case _ => false
+    }
+  }
 }
