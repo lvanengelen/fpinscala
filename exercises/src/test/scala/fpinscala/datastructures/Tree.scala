@@ -33,4 +33,25 @@ class TreeSpec extends FlatSpec {
   "The depth of a tree" should "be the maximum path length from the root to any leaf" in {
     assert(Tree.depth(exampleTree1) === 3)
   }
+
+  "Mapping over a list" should "apply the given functions to the appropriate parts of the tree" in {
+    val resultTree = Branch(
+      Branch(
+        Branch(
+          Leaf(2),
+          Leaf(3)
+        ),
+        Leaf(4)
+      ),
+      Branch(
+        Leaf(5),
+        Branch(
+          Leaf(6),
+          Leaf(7)
+        )
+      )
+    )
+
+    assert(Tree.map(exampleTree1)(x => x + 1) === resultTree)
+  }
 }
