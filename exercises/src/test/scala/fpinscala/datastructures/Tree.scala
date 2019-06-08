@@ -25,4 +25,8 @@ class TreeSpec extends FlatSpec {
   "The size of a tree" should "be the number of leaves and branches in it" in {
     assert(Tree.size(exampleTree1) === 11)
   }
+
+  "The maximum of a tree" should "be the maximum element of all leaves" in {
+    assert(Tree.maximum(exampleTree1) === 6)
+  }
 }
