@@ -56,4 +56,12 @@ class OptionSpec extends FlatSpec {
   "Filtering None" should "return None" in {
     assert((None: Option[Int]).filter(_ > 0) === None)
   }
+
+  "The variance of an empty sequence" should "return None" in {
+    assert(Option.variance(Seq.empty) === None)
+  }
+
+  "The variance of a list" should "return Some(variance)" in {
+    assert(Option.variance(Seq(1, 2, 3, 4, 5)) === Some(2.0))
+  }
 }
