@@ -64,4 +64,13 @@ class OptionSpec extends FlatSpec {
   "The variance of a list" should "return Some(variance)" in {
     assert(Option.variance(Seq(1, 2, 3, 4, 5)) === Some(2.0))
   }
+
+  "Map2 on two options" should "combine two option values using a binary function" in {
+    assert(Option.map2(Some(1), Some(2))(_ + _) === Some(3))
+  }
+
+  "Map2 with a None" should "return None" in {
+    assert(Option.map2(Some(1), None: Option[Int])(_ + _) === None)
+    assert(Option.map2(None: Option[Int], Some(1))(_ + _) === None)
+  }
 }
