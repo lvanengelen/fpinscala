@@ -81,4 +81,12 @@ class OptionSpec extends FlatSpec {
   "Sequence" should "combine a list of Options into None if the list contains any None" in {
     assert(Option.sequence(List(Some(1), None, Some(2))) === None)
   }
+
+  "Traverse" should "combine a list of Some values into a Some of a list of values " in {
+    assert(Option.traverse(List(1, 2))(Some(_)) === Some(List(1, 2)))
+  }
+
+  "Traverse" should "combine a list of Options into None if the list contains any None" in {
+    assert(Option.traverse(List(1, 2, 3))(x => if (x == 2) None else Some(x)) === None)
+  }
 }

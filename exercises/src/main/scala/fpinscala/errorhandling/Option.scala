@@ -52,10 +52,10 @@ object Option {
       y <- b
     } yield f(x, y)
 
-  def sequence[A](a: List[Option[A]]): Option[List[A]] = 
-    a.foldRight(Some(List.empty[A]): Option[List[A]]) { (opt, acc) =>
-      map2(opt, acc)(_ :: _)
-    }
+  def sequence[A](a: List[Option[A]]): Option[List[A]] = traverse(a)(identity)
 
-  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = ???
+  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] =
+    a.foldRight(Some(List.empty[B]): Option[List[B]]) { (x, acc) =>
+      map2(f(x), acc)(_ :: _)
+    }
 }
