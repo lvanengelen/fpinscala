@@ -73,4 +73,12 @@ class OptionSpec extends FlatSpec {
     assert(Option.map2(Some(1), None: Option[Int])(_ + _) === None)
     assert(Option.map2(None: Option[Int], Some(1))(_ + _) === None)
   }
+
+  "Sequence" should "combine a list of Some values into a Some of a list of values " in {
+    assert(Option.sequence(List(Some(1), Some(2))) === Some(List(1, 2)))
+  }
+
+  "Sequence" should "combine a list of Options into None if the list contains any None" in {
+    assert(Option.sequence(List(Some(1), None, Some(2))) === None)
+  }
 }
