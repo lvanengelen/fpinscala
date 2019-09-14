@@ -21,6 +21,13 @@ sealed trait Either[+E,+A] {
       x <- this
       y <- b
     } yield f(x, y)
+
+  def map2collect[EE >: E, B, C](b: Either[EE, B])(f: (A, B) => C): Either[List[EE], C] = (this, b) match {
+    case (Left(e1), Left(e2)) => Left(List(e1, e2))
+    case (Left(e1), _) => Left(List(e1))
+    case (_, Left(e2)) => Left(List(e2))
+    case (Right(a), Right(b)) => Right(f(a, b))
+  }
 }
 case class Left[+E](get: E) extends Either[E,Nothing]
 case class Right[+A](get: A) extends Either[Nothing,A]

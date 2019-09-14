@@ -56,4 +56,20 @@ class EitherSpec extends FlatSpec {
   "Either sequence" should "combine a list of values into a Left" in {
     assert(Either.sequence(List(Right(1), Left("2"), Left("3"), Right(4))) === Left("2"))
   }
+
+  "Either map2 collect" should "combine two Right values using a binary function" in {
+    assert(Right(1).map2collect(Right(2))(_ + _) === Right(3))
+  }
+
+  "Either map2 collect" should "collect the original value if it is Left" in {
+    assert((Left(1): Either[Int, Int]).map2collect(Right(2))(_ + _) === Left(List(1)))
+  }
+
+  "Either map2 collect" should "collect the given value if it is Left" in {
+    assert(Right(1).map2collect(Left(2))(_ + _) === Left(List(2)))
+  }
+
+  "Either map2 collect" should "collect the original and given values if they are both Left" in {
+    assert((Left(1): Either[Int, Int]).map2collect(Left(2))(_ + _) === Left(List(1, 2)))
+  }
 }
