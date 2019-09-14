@@ -40,4 +40,20 @@ class EitherSpec extends FlatSpec {
   "Either orElse" should "return the original either if Right" in {
     assert(Right(1).orElse(Right(2)) === Right(1))
   }
+
+  "Either traverse" should "combine a list of values into a Right of a list of values" in {
+    assert(Either.traverse(List(1, 2))(Right(_)) === Right(List(1, 2)))
+  }
+
+  "Either traverse" should "combine a list of values into a Left" in {
+    assert(Either.traverse(List(1, 2, 3, 4))(x => if (x == 2 || x == 3) Left(x.toString) else Right(x)) === Left("2"))
+  }
+
+  "Either sequence" should "combine a list of values into a Right of a list of values" in {
+    assert(Either.sequence(List(Right(1), Right(2))) === Right(List(1, 2)))
+  }
+
+  "Either sequence" should "combine a list of values into a Left" in {
+    assert(Either.sequence(List(Right(1), Left("2"), Left("3"), Right(4))) === Left("2"))
+  }
 }

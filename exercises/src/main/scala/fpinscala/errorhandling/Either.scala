@@ -12,7 +12,7 @@ sealed trait Either[+E,+A] {
   }
 
   def orElse[EE >: E, B >: A](b: => Either[EE, B]): Either[EE, B] = this match {
-    case Left(e) => b
+    case Left(_) => b
     case _ => this
   }
 
@@ -26,9 +26,12 @@ case class Left[+E](get: E) extends Either[E,Nothing]
 case class Right[+A](get: A) extends Either[Nothing,A]
 
 object Either {
-  def traverse[E,A,B](es: List[A])(f: A => Either[E, B]): Either[E, List[B]] = ???
+  def traverse[E,A,B](es: List[A])(f: A => Either[E, B]): Either[E, List[B]] =
+    es.foldRight(Right(List.empty[B]): Either[E, List[B]]) { (a, acc) =>
+      f(a).map2(acc)(_ :: _)
+    }
 
-  def sequence[E,A](es: List[Either[E,A]]): Either[E,List[A]] = ???
+  def sequence[E,A](es: List[Either[E,A]]): Either[E,List[A]] = traverse(es)(identity)
 
   def mean(xs: IndexedSeq[Double]): Either[String, Double] = 
     if (xs.isEmpty) 
