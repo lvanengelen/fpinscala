@@ -32,7 +32,19 @@ trait Stream[+A] {
 
   def startsWith[B](s: Stream[B]): Boolean = ???
 
-  def toList: List[A] = foldRight(List.empty[A])(_ :: _)
+  def toList: List[A] = {
+    import scala.collection.mutable
+    val buf = mutable.ListBuffer[A]()
+    @annotation.tailrec
+    def loop(xs: Stream[A]): List[A] = xs match {
+      case Cons(h, t) => 
+        buf += h()
+        loop(t())
+      case Empty =>
+        buf.toList
+    }
+    loop(this)
+  }
 }
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
