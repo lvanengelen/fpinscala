@@ -28,4 +28,9 @@ class StreamSpec extends FlatSpec {
   "Dropping items from a Stream" should "result in a Stream of the remaining items" in {
     assert(Stream(1, 2, 3, 4).drop(2).toList === List(3, 4))
   }
+
+  "Taking while predicate matches" should "result in a Stream with starting elements matching the predicate" in {
+    assert(Stream(1, 2, 3, 2).takeWhile(_ <= 2).toList === List(1, 2))
+  }
+
 }
