@@ -33,4 +33,15 @@ class StreamSpec extends FlatSpec {
     assert(Stream(1, 2, 3, 2).takeWhile(_ <= 2).toList === List(1, 2))
   }
 
+  "For all on an empty Stream" should "result in true" in {
+    assert(Stream.empty[Int].forAll(_ => false))
+  }
+
+  "For all" should "result in true if the predicate holds for every element" in {
+    assert(Stream(1, 2, 3).forAll(_ < 4))
+  }
+
+  "For all" should "result in false if the predicate does not hold for some element" in {
+    assert(!Stream(1, 2, 3).forAll(_ < 3))
+  }
 }
