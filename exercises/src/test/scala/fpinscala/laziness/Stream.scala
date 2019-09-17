@@ -52,4 +52,25 @@ class StreamSpec extends FlatSpec {
   "Head option" should "result in Some of the first item of a non-empty Stream" in {
     assert(Stream(1, 2).headOption === Some(1))
   }
+
+  "Mapping a non-empty Stream" should "transform the members" in {
+    assert(Stream(1, 2, 3).map(_.toString).toList === List("1", "2", "3"))
+  }
+
+  "Filtering a Stream" should "only keep the items matching the predicate" in {
+    assert(Stream(1, 2, 3).filter(_ != 2).toList === List(1, 3))
+  }
+
+  "Appending a Stream" should "result in the concatenation of the Streams" in {
+    assert(Stream(1, 2).append(Stream(3, 4)).toList === List(1, 2, 3, 4))
+  }
+
+  "Flatmapping an empty Stream" should "result in an empty Stream of the correct type" in {
+    assert(Stream.empty[Int].flatMap(x => Stream("[", x, "]")).toList === List.empty[String])
+  }
+
+  "Flatmapping a Stream" should "transform the members and flatten the result" in {
+    assert(Stream(1, 2, 3).flatMap(x => Stream("[", x.toString, "]")).toList ===
+      List("[", "1", "]", "[", "2", "]", "[", "3", "]"))
+  }
 }
