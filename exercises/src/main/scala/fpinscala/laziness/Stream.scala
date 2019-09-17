@@ -81,8 +81,8 @@ object Stream {
     if (as.isEmpty) empty 
     else cons(as.head, apply(as.tail: _*))
 
-  val ones: Stream[Int] = Stream.cons(1, ones)
-  def from(n: Int): Stream[Int] = cons(n, from(n + 1))
+  val ones: Stream[Int] = constant(1)
+  def from(n: Int): Stream[Int] = unfold(n)(s => Some((s, s + 1)))
 
   def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] =
     f(z) match {
@@ -90,13 +90,9 @@ object Stream {
       case Some((a, s)) => cons(a, unfold(s)(f))
     }
 
-  def constant[A](a: A): Stream[A] = {
-    lazy val as: Stream[A] = cons(a, as)
-    as
-  }
+  def constant[A](a: A): Stream[A] = unfold(a)(s => Some((s, s)))
 
-  val fibs: Stream[Int] = {
-    def fib(x: Int, y: Int): Stream[Int] = cons(x, fib(y, x + y))
-    fib(0, 1)
+  val fibs: Stream[Int] = unfold((0, 1)) { case (x, y) =>
+    Some((x, (y, x + y)))
   }
 }
