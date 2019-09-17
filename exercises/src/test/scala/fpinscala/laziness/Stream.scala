@@ -85,4 +85,12 @@ class StreamSpec extends FlatSpec {
   "Fibs" should "return an infinite Stream of Fibonacci numbers" in {
     assert(Stream.fibs.take(7).toList === List(0, 1, 1, 2, 3, 5, 8))
   }
+
+  "Unfold" should "produce values while the stream-building function returns Some" in {
+    assert(Stream.unfold(0)(s => Some(s.toString, s + 1)).take(3).toList === List("0", "1", "2"))
+  }
+
+  "Unfold" should "terminate the Stream when the stream-building function returns None" in {
+    assert(Stream.unfold(0)(s => if (s != 3) Some(s.toString, s + 1) else None).toList === List("0", "1", "2"))
+  }
 }
