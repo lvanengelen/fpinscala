@@ -73,4 +73,8 @@ class StreamSpec extends FlatSpec {
     assert(Stream(1, 2, 3).flatMap(x => Stream("[", x.toString, "]")).toList ===
       List("[", "1", "]", "[", "2", "]", "[", "3", "]"))
   }
+
+  "Constant" should "return an infinite Stream of a given value" in {
+    assert(Stream.constant("a").take(3).toList === List("a", "a", "a"))
+  }
 }

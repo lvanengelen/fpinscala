@@ -85,4 +85,6 @@ object Stream {
   def from(n: Int): Stream[Int] = ???
 
   def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = ???
+
+  def constant[A](a: A): Stream[A] = Stream.cons(a, constant(a))
 }
