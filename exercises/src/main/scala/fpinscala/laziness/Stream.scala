@@ -86,5 +86,8 @@ object Stream {
 
   def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = ???
 
-  def constant[A](a: A): Stream[A] = Stream.cons(a, constant(a))
+  def constant[A](a: A): Stream[A] = {
+    lazy val as: Stream[A] = cons(a, as)
+    as
+  }
 }
