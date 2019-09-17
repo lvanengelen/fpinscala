@@ -81,4 +81,8 @@ class StreamSpec extends FlatSpec {
   "From" should "return an infinite Stream of integers starting at the given value" in {
     assert(Stream.from(42).take(3).toList === List(42, 43, 44))
   }
+
+  "Fibs" should "return an infinite Stream of Fibonacci numbers" in {
+    assert(Stream.fibs.take(7).toList === List(0, 1, 1, 2, 3, 5, 8))
+  }
 }

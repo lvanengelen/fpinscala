@@ -90,4 +90,9 @@ object Stream {
     lazy val as: Stream[A] = cons(a, as)
     as
   }
+
+  val fibs: Stream[Int] = {
+    def fib(x: Int, y: Int): Stream[Int] = cons(x, fib(y, x + y))
+    fib(0, 1)
+  }
 }
