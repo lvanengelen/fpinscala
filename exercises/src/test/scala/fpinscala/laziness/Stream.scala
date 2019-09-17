@@ -44,4 +44,12 @@ class StreamSpec extends FlatSpec {
   "For all" should "result in false if the predicate does not hold for some element" in {
     assert(!Stream(1, 2, 3).forAll(_ < 3))
   }
+
+  "Head option" should "result in None for an empty Stream" in {
+    assert(Stream.empty[Int].headOption === None)
+  }
+
+  "Head option" should "result in Some of the first item of a non-empty Stream" in {
+    assert(Stream(1, 2).headOption === Some(1))
+  }
 }
