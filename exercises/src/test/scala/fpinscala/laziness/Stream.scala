@@ -77,4 +77,8 @@ class StreamSpec extends FlatSpec {
   "Constant" should "return an infinite Stream of a given value" in {
     assert(Stream.constant("a").take(3).toList === List("a", "a", "a"))
   }
+
+  "From" should "return an infinite Stream of integers starting at the given value" in {
+    assert(Stream.from(42).take(3).toList === List(42, 43, 44))
+  }
 }
