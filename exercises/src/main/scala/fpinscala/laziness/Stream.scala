@@ -18,10 +18,10 @@ trait Stream[+A] {
     case Cons(h, t) => if (f(h())) Some(h()) else t().find(f)
   }
 
-  def take(n: Int): Stream[A] = this match {
-    case Cons(h, _) if n == 1 => cons(h(), empty)
-    case Cons(h, t) if n > 1 => cons(h(), t().take(n - 1))
-    case _ => empty
+  def take(n: Int): Stream[A] = unfold((this, n)) {
+    case (Cons(h, _), 1) => Some((h(), (empty, 0)))
+    case (Cons(h, t), n) if n > 1 => Some((h(), (t(), n - 1)))
+    case _ => None
   }
 
   @annotation.tailrec
@@ -30,8 +30,10 @@ trait Stream[+A] {
     case _ => this
   }
 
-  def takeWhile(p: A => Boolean): Stream[A] =
-    foldRight(empty[A])((h, t) => if (p(h)) cons(h, t) else empty)
+  def takeWhile(p: A => Boolean): Stream[A] = unfold(this) {
+    case Cons(h, t) if p(h()) => Some((h(), t()))
+    case _ => None
+  }
 
   def forAll(p: A => Boolean): Boolean = foldRight(true)((a, b) => p(a) && b)
 
@@ -45,7 +47,10 @@ trait Stream[+A] {
   def flatMap[B](f: A => Stream[B]): Stream[B] =
     foldRight(empty[B])((h, t) => f(h).append(t))
 
-  def map[B](f: A => B): Stream[B] = flatMap(f.andThen(Stream(_)))
+  def map[B](f: A => B): Stream[B] = unfold(this) {
+    case Empty => None
+    case Cons(h, t) => Some((f(h()), t()))
+  }
 
   def filter(p: A => Boolean): Stream[A] = flatMap(x => if (p(x)) Stream(x) else empty)
 
@@ -63,6 +68,18 @@ trait Stream[+A] {
         buf.toList
     }
     loop(this)
+  }
+
+  def zipWith[B, C](s2: Stream[B])(f: (A, B) => C): Stream[C] = unfold((this, s2)) {
+    case (Cons(h1, t1), Cons(h2, t2)) => Some((f(h1(), h2()), (t1(), t2())))
+    case _ => None
+  }
+
+  def zipAll[B](s2: Stream[B]): Stream[(Option[A], Option[B])] = unfold((this, s2)) {
+    case (Cons(h1, t1), Cons(h2, t2)) => Some(((Some(h1()), Some(h2())), (t1(), t2())))
+    case (Cons(h1, t1), _) => Some(((Some(h1()), None), (t1(), empty)))
+    case (_, Cons(h2, t2)) => Some(((None, Some(h2())), (empty, t2())))
+    case _ => None
   }
 }
 case object Empty extends Stream[Nothing]

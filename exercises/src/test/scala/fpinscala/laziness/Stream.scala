@@ -93,4 +93,31 @@ class StreamSpec extends FlatSpec {
   "Unfold" should "terminate the Stream when the stream-building function returns None" in {
     assert(Stream.unfold(0)(s => if (s != 3) Some(s.toString, s + 1) else None).toList === List("0", "1", "2"))
   }
+
+  "ZipWith" should "result in a Stream with the length of the shortest Stream" in {
+    assert(Stream(1, 2, 3).zipWith(Stream("a", "b"))((x, y) => x.toString + y).toList === List("1a", "2b"))
+  }
+
+  "ZipWith" should "work properly with an unlimited Stream and a limited Stream" in {
+    assert(Stream.ones.zipWith(Stream("a", "b"))((x, y) => x.toString + y).toList === List("1a", "1b"))
+  }
+
+  "ZipWith" should "work properly with two unlimited Streams" in {
+    assert(Stream.ones.zipWith(Stream.ones)(_ + _).take(3).toList === List(2, 2, 2))
+  }
+
+  "ZipAll" should "result in a Stream of pairs of Options" in {
+    assert(Stream(1, 2, 3, 4).zipAll(Stream("a", "b")).toList ===
+      List((Some(1), Some("a")), (Some(2), Some("b")), (Some(3), None), (Some(4), None)))
+  }
+
+  "ZipAll" should "work properly with an unlimited Stream and a limited Stream" in {
+    assert(Stream.ones.zipAll(Stream("a", "b")).take(4).toList ===
+      List((Some(1), Some("a")), (Some(1), Some("b")), (Some(1), None), (Some(1), None)))
+  }
+
+  "ZipAll" should "work properly with two unlimited Streams" in {
+    assert(Stream.ones.zipAll(Stream.ones).take(4).toList ===
+      List((Some(1), Some(1)), (Some(1), Some(1)), (Some(1), Some(1)), (Some(1), Some(1))))
+  }
 }
