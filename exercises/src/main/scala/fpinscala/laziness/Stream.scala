@@ -54,7 +54,11 @@ trait Stream[+A] {
 
   def filter(p: A => Boolean): Stream[A] = flatMap(x => if (p(x)) Stream(x) else empty)
 
-  def startsWith[B](s: Stream[B]): Boolean = ???
+  def startsWith[B](s: Stream[B]): Boolean = this.zipAll(s).takeWhile {
+    case (_, b) => b.nonEmpty
+  }.forAll {
+    case (a, b) => a == b
+  }
 
   def toList: List[A] = {
     import scala.collection.mutable

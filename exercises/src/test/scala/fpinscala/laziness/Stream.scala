@@ -120,4 +120,20 @@ class StreamSpec extends FlatSpec {
     assert(Stream.ones.zipAll(Stream.ones).take(4).toList ===
       List((Some(1), Some(1)), (Some(1), Some(1)), (Some(1), Some(1)), (Some(1), Some(1))))
   }
+
+  "StartsWith" should "return true when the first stream starts with all elements of the second stream" in {
+    assert(Stream(1, 2, 3).startsWith(Stream(1, 2)))
+  }
+
+  "StartsWith" should "return false when the first stream does not start with all elements of the second stream" in {
+    assert(!Stream(1, 2, 3).startsWith(Stream(2, 3)))
+  }
+
+  "StartsWith" should "handle an empty first stream correctly" in {
+    assert(!Stream.empty[Int].startsWith(Stream(1, 2)))
+  }
+
+  "StartsWith" should "handle an empty second stream corectly" in {
+    assert(Stream(1, 2, 3).startsWith(Stream.empty[Int]))
+  }
 }
